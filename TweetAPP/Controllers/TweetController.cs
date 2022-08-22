@@ -20,6 +20,7 @@ namespace TweetAPP.Controllers
             _userService = userSer;
         }
 
+
         [HttpGet]
         [Route("/api/v1.0/tweets/all")]
         public ResponseModel<List<Tweet>> GetAllTweets()
