@@ -1,0 +1,124 @@
+[{
+  "_id": {
+    "$oid": "62e37671a504285f53018750"
+  },
+  "TweetText": "HIII..ui",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "1659353180687"
+    }
+  },
+  "Username": "Abhi51",
+  "Likes": 0
+},{
+  "_id": {
+    "$oid": "62e659168d449abb8b98640e"
+  },
+  "TweetText": "Hi I am Abhishake",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "1659043200000"
+    }
+  },
+  "Username": "coolAbhishake",
+  "Likes": 1
+},{
+  "_id": {
+    "$oid": "62e659978d449abb8b986413"
+  },
+  "TweetText": "Hi I am Abhijit",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "1659043200000"
+    }
+  },
+  "Username": "Abhi51",
+  "Likes": 0
+},{
+  "_id": {
+    "$oid": "62e659c48d449abb8b98641c"
+  },
+  "TweetText": "hhho",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "-62135596800000"
+    }
+  },
+  "Username": "Aman51",
+  "Likes": 0
+},{
+  "_id": {
+    "$oid": "62e6738fa414bad821bc48fe"
+  },
+  "TweetText": "Last ride",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "-62135596800000"
+    }
+  },
+  "Username": "Abhi51",
+  "Likes": 0
+},{
+  "_id": {
+    "$oid": "62ea6107f80d9270951a36d3"
+  },
+  "TweetText": "this is me aman",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "-62135596800000"
+    }
+  },
+  "Username": "Aman51",
+  "Likes": 0
+},{
+  "_id": {
+    "$oid": "62eb772a3305fa2eddc7e7ce"
+  },
+  "TweetText": "updated tweet test",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "1659598794099"
+    }
+  },
+  "Username": "coolAbhishake",
+  "Likes": 0
+},{
+  "_id": {
+    "$oid": "62eb79f8941eeb038042f394"
+  },
+  "TweetText": "testing tags",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "-62135596800000"
+    }
+  },
+  "Username": "aman51",
+  "Likes": 0,
+  "Tags": "#test #succesfull"
+},{
+  "_id": {
+    "$oid": "62eccf595152e2d8ce4020e3"
+  },
+  "TweetText": "Testing with encoded pwd",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "-62135596800000"
+    }
+  },
+  "Username": "coder_ab23",
+  "Likes": 2,
+  "Tags": "#encoded"
+},{
+  "_id": {
+    "$oid": "62ecd0cb5f13a7678634efb5"
+  },
+  "TweetText": "checking with datetime.now",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "1659687115529"
+    }
+  },
+  "Username": "coder_ab23",
+  "Likes": 0,
+  "Tags": null
+}]

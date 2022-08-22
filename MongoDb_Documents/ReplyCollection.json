@@ -1,0 +1,88 @@
+[{
+  "_id": {
+    "$oid": "62ea36916b3ddf78e1201efe"
+  },
+  "TweetId": "62e659168d449abb8b98640e",
+  "ReplyText": "This is reply 1",
+  "ReplyTime": {
+    "$date": {
+      "$numberLong": "1659465000000"
+    }
+  },
+  "ReplyUsername": "Abhi51"
+},{
+  "_id": {
+    "$oid": "62ea379e6b3ddf78e1201f05"
+  },
+  "TweetId": "62e659168d449abb8b98640e",
+  "ReplyText": "This is reply 2",
+  "ReplyTime": {
+    "$date": {
+      "$numberLong": "1659461400000"
+    }
+  },
+  "ReplyUsername": "Aman51"
+},{
+  "_id": {
+    "$oid": "62ea4455fa4158b4fe9ee6a3"
+  },
+  "TweetId": "62e6717c2726f6599a73db95",
+  "ReplyTime": {
+    "$date": {
+      "$numberLong": "1659520085176"
+    }
+  },
+  "ReplyText": "Sorry guyz.",
+  "ReplyUsername": "Aman51"
+},{
+  "_id": {
+    "$oid": "62ea60b1f80d9270951a36d2"
+  },
+  "TweetId": "62e6717c2726f6599a73db95",
+  "ReplyTime": {
+    "$date": {
+      "$numberLong": "1659527345646"
+    }
+  },
+  "ReplyText": "hello guyz, it me abhishake.",
+  "ReplyUsername": "coolAbhishake"
+},{
+  "_id": {
+    "$oid": "62ecd5900c4435c91692d4af"
+  },
+  "TweetId": "62eccf595152e2d8ce4020e3",
+  "ReplyTime": {
+    "$date": {
+      "$numberLong": "1659688336073"
+    }
+  },
+  "ReplyText": null,
+  "ReplyUsername": "Abhi51",
+  "Tags": null
+},{
+  "_id": {
+    "$oid": "62ecd5dc0c4435c91692d4b0"
+  },
+  "TweetId": "62eccf595152e2d8ce4020e3",
+  "ReplyTime": {
+    "$date": {
+      "$numberLong": "1659688412230"
+    }
+  },
+  "ReplyText": "Working fine with encoded password",
+  "ReplyUsername": "Abhi51",
+  "Tags": null
+},{
+  "_id": {
+    "$oid": "62ecd6c00c4435c91692d4b1"
+  },
+  "TweetId": "62eccf595152e2d8ce4020e3",
+  "ReplyTime": {
+    "$date": {
+      "$numberLong": "1659688640739"
+    }
+  },
+  "ReplyText": null,
+  "ReplyUsername": "Abhi51",
+  "Tags": null
+}]
