@@ -13,7 +13,7 @@ namespace TweetAPP.Service
         Task<List<Tweet>> GetTweetsByUsername(string username);
         Task<List<Reply>> GetReplyonTweet(string tweetId);
 
-        string likes(string Id);
+        string likes(string Id,string username);
 
         bool PostTweet(string username, Tweet tweet);
 
@@ -22,6 +22,10 @@ namespace TweetAPP.Service
         bool DeleteTweet(string tweetId, string username);
 
         string replyPost(string Id, Reply reply, string username);
+
+        string replyToPost(string Id, Tweet reply, string username);
+
+        Tweet getPostbyID(string Id);
 
     }
 }

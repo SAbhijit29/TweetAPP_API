@@ -1,8 +1,11 @@
-﻿using MongoDB.Bson;
+﻿using Microsoft.AspNetCore.Http;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 using TweetAPP.Models;
@@ -18,10 +21,28 @@ namespace TweetAPP.Repository
         {
             try
             {
-                var client = new MongoClient(settings.ConnectionString);
+                /* for Local host connection */
+                //var client = new MongoClient(settings.ConnectionString);
+                //var database = client.GetDatabase(settings.DatabaseName);
+
+                //_users = database.GetCollection<UserRegistration>("UserRegistration");
+
+
+                string connectionString =
+@"mongodb://abhijit-dbtweet:Kc7C2jJcvMdoz0uV51WGZt1SJoiWT7QW98QF0NaY83sLgAFSy8DkwE0CIvdELVSxS0nz12FZkbZPGsOl1tWlwg==@abhijit-dbtweet.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@abhijit-dbtweet@";
+                MongoClientSettings settings2 = MongoClientSettings.FromUrl(
+                  new MongoUrl(connectionString)
+                );
+                settings2.SslSettings =
+                  new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+                var client = new MongoClient(settings2);
+
                 var database = client.GetDatabase(settings.DatabaseName);
 
+                //_tweet = database.GetCollection<Tweet>("TweetCollection");
                 _users = database.GetCollection<UserRegistration>("UserRegistration");
+               // _reply = database.GetCollection<Reply>("ReplyCollection");
+
                 _log4net.Info("MongoDb connected with database:" +database);
             }
             catch (Exception ex)
@@ -46,7 +67,8 @@ namespace TweetAPP.Repository
                     u.Email = item.Email;
                     u.Username = item.Username;
                     u.Phone = item.Phone;
-
+                    u.JoinedDate = item.JoinedDate;
+                    //u.Image = item.Image;
                     user.Add(u);
                 }
                 return user;
@@ -76,10 +98,13 @@ namespace TweetAPP.Repository
                         encode = Encoding.UTF8.GetBytes(pwd);
                         usr.Password = Convert.ToBase64String(encode);
                         usr.ConfirmPassword = usr.Password;
+                        usr.JoinedDate = DateTime.UtcNow;
                         await _users.InsertOneAsync(usr);
                     }
                     else
+                    {
                         return null;
+                    }
                 }
                 else
                 {
@@ -99,7 +124,9 @@ namespace TweetAPP.Repository
                                     await _users.InsertOneAsync(usr);
                                 }
                                 else
+                                {
                                     return null;
+                                }
                             }
                             return null;
                         }
@@ -142,10 +169,48 @@ namespace TweetAPP.Repository
         {
             _log4net.Info("Repository called from Service to get the userdetails from its username");
             var isUser = new UserRegistration();
+            isUser = _users.Find<UserRegistration>(x => x.Email == username).FirstOrDefault();
+            return isUser;
+        }
+
+        public UserRegistration getUsertbyName(string username)
+        {
+            _log4net.Info("Repository called from Service to get the userdetails from its username");
+            var isUser = new UserRegistration();
             isUser = _users.Find<UserRegistration>(x => x.Username == username).FirstOrDefault();
             return isUser;
         }
 
+        public string UploadImage(IFormFile formFile, string username)
+        {
+            var isUser = getUsertbyName(username);
+
+            try
+            {
+                if (isUser != null && formFile != null)
+                {
+                    MemoryStream memory = new MemoryStream();
+                    formFile.OpenReadStream().CopyTo(memory);
+                    isUser.Image = Convert.ToBase64String(memory.ToArray());
+
+                    _log4net.Info("Repository called from Service to implement forgot password");
+                    var filterDefinition = Builders<UserRegistration>.Filter.Eq(u => u.Username, username);
+
+                    var updateDefinition = Builders<UserRegistration>.Update.Set(u => u.Image, isUser.Image);
+
+                    _users.UpdateOne(filterDefinition, updateDefinition);
+
+                    return "Image uploaded successfully";
+                }
+
+                return "Image can't be upload";
+            }
+            catch (Exception e)
+            {
+
+                throw e.InnerException;
+            }
+        }
         public User searchUserbyUsername(string username)
         {
             _log4net.Info("Repository called from Service to get the user from its username");
@@ -159,23 +224,24 @@ namespace TweetAPP.Repository
                 u.Email = isUser.Email;
                 u.Username = isUser.Username;
                 u.Phone = isUser.Phone;
+                u.JoinedDate = isUser.JoinedDate;
                 return u;
             }
              return null;
         }
 
-        public string forgotPassword(string username,string password)
+        public string forgotPassword(ForgotPassword login)
         {
-            var usr = getUsertbyUserName(username);
+            var usr = getUsertbyUserName(login.Username);
             try
             {
                 if (usr != null)
                 {
-                    var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(password);
-                    var pwd = System.Convert.ToBase64String(plainTextBytes);
+                    var plainTextBytes = Encoding.UTF8.GetBytes(login.Password);
+                    var pwd = Convert.ToBase64String(plainTextBytes);
 
                     _log4net.Info("Repository called from Service to implement forgot password");
-                    var filterDefinition = Builders<UserRegistration>.Filter.Eq(u => u.Username, username);
+                    var filterDefinition = Builders<UserRegistration>.Filter.Eq(u => u.Email, login.Username);
 
                     var updateDefinition = Builders<UserRegistration>.Update.Set(u => u.Password, pwd);
                     _users.UpdateOne(filterDefinition, updateDefinition);

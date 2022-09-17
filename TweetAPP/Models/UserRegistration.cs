@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace TweetAPP.Models
 {
@@ -24,12 +25,12 @@ namespace TweetAPP.Models
 
         [BsonRequired]
         [MinLength(3, ErrorMessage = "Please enter valid username")]
-        [RegularExpression("^[A-Za-z][A-Za-z0-9_]{2,14}$" , ErrorMessage ="Minimum length 3 required")]
+        [RegularExpression("^[A-Za-z][A-Za-z0-9_]{2,14}$" , ErrorMessage ="Username length should be more than 3 and should only consists alphabet/_")]
         public string Username { get; set; }
 
         [BsonRequired]
         [MinLength(8, ErrorMessage = "Please enter valid password with length minimum 8 letters including 1 small, 1 capital, 1 numeric & 1 special in it.")]
-        [RegularExpression("^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,26}$")]
+        [RegularExpression("^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,26}$" ,ErrorMessage = "Please enter valid password with length minimum 8 letters including 1 small, 1 capital, 1 numeric & 1 special in it.")]
         public string Password { get; set; }
 
         [BsonRequired]
@@ -43,6 +44,10 @@ namespace TweetAPP.Models
         [BsonRequired]
         [RegularExpression("^[0-9]{10}$" ,ErrorMessage ="Please enter 10 digit Mobile Number")]
         public double Phone { get; set; }
+
+        public DateTime JoinedDate { get; set; }
+
+        public string Image { get; set; }
 
     }
 }

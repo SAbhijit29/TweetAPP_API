@@ -1,124 +1,186 @@
 [{
   "_id": {
-    "$oid": "62e37671a504285f53018750"
+    "$oid": "630866a56343046538175554"
   },
-  "TweetText": "HIII..ui",
+  "TweetText": "Hi, Welcome Home..",
   "TweetTime": {
     "$date": {
-      "$numberLong": "1659353180687"
-    }
-  },
-  "Username": "Abhi51",
-  "Likes": 0
-},{
-  "_id": {
-    "$oid": "62e659168d449abb8b98640e"
-  },
-  "TweetText": "Hi I am Abhishake",
-  "TweetTime": {
-    "$date": {
-      "$numberLong": "1659043200000"
-    }
-  },
-  "Username": "coolAbhishake",
-  "Likes": 1
-},{
-  "_id": {
-    "$oid": "62e659978d449abb8b986413"
-  },
-  "TweetText": "Hi I am Abhijit",
-  "TweetTime": {
-    "$date": {
-      "$numberLong": "1659043200000"
-    }
-  },
-  "Username": "Abhi51",
-  "Likes": 0
-},{
-  "_id": {
-    "$oid": "62e659c48d449abb8b98641c"
-  },
-  "TweetText": "hhho",
-  "TweetTime": {
-    "$date": {
-      "$numberLong": "-62135596800000"
+      "$numberLong": "1661494949207"
     }
   },
   "Username": "Aman51",
-  "Likes": 0
+  "Likes": 5,
+  "Tags": null,
+  "Fullname": "Aman Chaudhary",
+  "LikedBy": [
+    "coolAbhishake",
+    "coder_ab23",
+    "Aman51",
+    "omp2345",
+    "Abhi51"
+  ],
+  "ReplyID": [
+    "630c96a26302d95ef50c55c7",
+    "630c96d46302d95ef50c55c8",
+    "630c98a36302d95ef50c55c9",
+    "630c98e46302d95ef50c55ca",
+    "630ce7b98520eaede11b64b3"
+  ]
 },{
   "_id": {
-    "$oid": "62e6738fa414bad821bc48fe"
+    "$oid": "630866b16343046538175555"
   },
-  "TweetText": "Last ride",
+  "TweetText": "Hi i am Aman",
   "TweetTime": {
     "$date": {
-      "$numberLong": "-62135596800000"
-    }
-  },
-  "Username": "Abhi51",
-  "Likes": 0
-},{
-  "_id": {
-    "$oid": "62ea6107f80d9270951a36d3"
-  },
-  "TweetText": "this is me aman",
-  "TweetTime": {
-    "$date": {
-      "$numberLong": "-62135596800000"
+      "$numberLong": "1661494961550"
     }
   },
   "Username": "Aman51",
-  "Likes": 0
+  "Likes": 4,
+  "Tags": null,
+  "Fullname": "Aman Chaudhary",
+  "LikedBy": [
+    "omp2345",
+    "coder_ab23",
+    "Aman51",
+    "Abhi51"
+  ],
+  "ReplyID": [
+    "630b8b4d7a44fac88f63c455",
+    "630b8b557a44fac88f63c456"
+  ]
 },{
   "_id": {
-    "$oid": "62eb772a3305fa2eddc7e7ce"
+    "$oid": "63088471d0006ff89e904e90"
   },
-  "TweetText": "updated tweet test",
+  "TweetText": "Final test with post #abhijit #aman #abhishake",
   "TweetTime": {
     "$date": {
-      "$numberLong": "1659598794099"
+      "$numberLong": "1661756084375"
     }
   },
-  "Username": "coolAbhishake",
-  "Likes": 0
+  "Username": "Abhi51",
+  "Likes": 1,
+  "Tags": [
+    "#abhijit",
+    "#aman",
+    "#abhishake"
+  ],
+  "Fullname": "Abhijit Sinha",
+  "LikedBy": [
+    "Abhi51"
+  ],
+  "ReplyID": []
 },{
   "_id": {
-    "$oid": "62eb79f8941eeb038042f394"
+    "$oid": "630c925460466edec4bec32a"
   },
-  "TweetText": "testing tags",
+  "TweetText": "Hi #frehs #new",
   "TweetTime": {
     "$date": {
-      "$numberLong": "-62135596800000"
+      "$numberLong": "1661768276124"
     }
   },
-  "Username": "aman51",
+  "Username": "Abhi51",
   "Likes": 0,
-  "Tags": "#test #succesfull"
+  "Tags": [
+    "#frehs",
+    "#new"
+  ],
+  "Fullname": "Abhijit Sinha",
+  "LikedBy": [],
+  "ReplyID": []
 },{
   "_id": {
-    "$oid": "62eccf595152e2d8ce4020e3"
+    "$oid": "630c96a26302d95ef50c55c7"
   },
-  "TweetText": "Testing with encoded pwd",
+  "TweetText": "Tags #atg",
   "TweetTime": {
     "$date": {
-      "$numberLong": "-62135596800000"
+      "$numberLong": "1661769378104"
     }
   },
-  "Username": "coder_ab23",
-  "Likes": 2,
-  "Tags": "#encoded"
-},{
-  "_id": {
-    "$oid": "62ecd0cb5f13a7678634efb5"
-  },
-  "TweetText": "checking with datetime.now",
-  "TweetTime": {
-    "$date": {
-      "$numberLong": "1659687115529"
-    }
-  },
-  "Username": "coder_ab23",
+  "Username": "Abhi51",
   "Likes": 0,
-  "Tags": null
+  "Tags": [
+    "#atg"
+  ],
+  "Fullname": "Abhijit Sinha",
+  "LikedBy": [],
+  "ReplyID": []
+},{
+  "_id": {
+    "$oid": "630c96d46302d95ef50c55c8"
+  },
+  "TweetText": "Tags #atg #new",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "1661769428306"
+    }
+  },
+  "Username": "Abhi51",
+  "Likes": 0,
+  "Tags": [
+    "#atg",
+    "#new"
+  ],
+  "Fullname": "Abhijit Sinha",
+  "LikedBy": [],
+  "ReplyID": []
+},{
+  "_id": {
+    "$oid": "630c98a36302d95ef50c55c9"
+  },
+  "TweetText": "Tags will delete #atg #new ",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "1661769891354"
+    }
+  },
+  "Username": "Abhi51",
+  "Likes": 0,
+  "Tags": [
+    "#atg",
+    "#new"
+  ],
+  "Fullname": "Abhijit Sinha",
+  "LikedBy": [],
+  "ReplyID": []
+},{
+  "_id": {
+    "$oid": "630c98e46302d95ef50c55ca"
+  },
+  "TweetText": "Tags will delete ",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "1661769956368"
+    }
+  },
+  "Username": "Abhi51",
+  "Likes": 0,
+  "Tags": [
+    "#new",
+    "#iho",
+    "#ipo"
+  ],
+  "Fullname": "Abhijit Sinha",
+  "LikedBy": [],
+  "ReplyID": []
+},{
+  "_id": {
+    "$oid": "630ce7b98520eaede11b64b3"
+  },
+  "TweetText": "",
+  "TweetTime": {
+    "$date": {
+      "$numberLong": "1661790137629"
+    }
+  },
+  "Username": "Abhi51",
+  "Likes": 0,
+  "Tags": null,
+  "Fullname": "Abhijit Sinha",
+  "LikedBy": [],
+  "ReplyID": []
 }]

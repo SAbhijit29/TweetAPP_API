@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.AspNetCore.Http;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +35,9 @@ namespace TweetAPP.Service
             return userRepo.GetByEmailAsync(login);
         }
 
-        public string forgotPassword(string username, string password)
+        public string forgotPassword(ForgotPassword login)
         {
-            return userRepo.forgotPassword(username, password);
+            return userRepo.forgotPassword(login);
         }
 
         public User searchUserbyUsername(string username)
@@ -44,6 +45,10 @@ namespace TweetAPP.Service
             return userRepo.searchUserbyUsername(username);
         }
 
+        public string UploadImage(IFormFile formFile, string username)
+        {
+            return userRepo.UploadImage(formFile, username);
+        }
 
     }
 }

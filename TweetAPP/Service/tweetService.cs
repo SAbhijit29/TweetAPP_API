@@ -30,9 +30,9 @@ namespace TweetAPP.Service
         {
             return await tweetRepo.GetReplyonTweet(tweetId);
         }
-        public string likes(string Id)
+        public string likes(string Id,string res)
         {
-           return tweetRepo.likes(Id);
+           return tweetRepo.likes(Id,res);
         }
 
         public bool PostTweet(string username, Tweet tweet)
@@ -54,5 +54,15 @@ namespace TweetAPP.Service
         {
             return tweetRepo.replyPost(Id, reply, username);
         }
+        public string replyToPost(string Id, Tweet reply, string username)
+        {
+            return tweetRepo.replyToPost(Id, reply, username);
+        }
+
+        public Tweet getPostbyID(string Id)
+        {
+            return tweetRepo.getPostbyID(Id);
+        }
     }
+
 }
