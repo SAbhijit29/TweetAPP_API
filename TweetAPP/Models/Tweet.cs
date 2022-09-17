@@ -23,7 +23,13 @@ namespace TweetAPP.Models
         public int Likes { get; set; }
 
         [MaxLength(50, ErrorMessage = "Limit reached for tweet message")]
-        public string Tags { get; set; }
+        public List<string> Tags { get; set; }
+
+        public string Fullname { get; set; }
+
+        public List<string>? LikedBy { get; set; }
+
+        public List<string> ReplyID { get; set; }
         #endregion
     }
 }

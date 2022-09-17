@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using TweetAPP.Models;
 using TweetAPP.MongoDbContext;
@@ -18,12 +19,31 @@ namespace TweetAPP.Repository
         {
             try
             {
-                var client = new MongoClient(settings.ConnectionString);
+                /* for Local host connection */
+                // var client = new MongoClient(settings.ConnectionString);
+                //var database = client.GetDatabase(settings.DatabaseName);
+
+                //_tweet = database.GetCollection<Tweet>("TweetCollection");
+                //_users = database.GetCollection<UserRegistration>("UserRegistration");
+                //_reply = database.GetCollection<Reply>("ReplyCollection");
+
+
+                string connectionString =
+  @"mongodb://abhijit-dbtweet:Kc7C2jJcvMdoz0uV51WGZt1SJoiWT7QW98QF0NaY83sLgAFSy8DkwE0CIvdELVSxS0nz12FZkbZPGsOl1tWlwg==@abhijit-dbtweet.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@abhijit-dbtweet@";
+                MongoClientSettings settings2 = MongoClientSettings.FromUrl(
+                  new MongoUrl(connectionString)
+                );
+                settings2.SslSettings =
+                  new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+                var client = new MongoClient(settings2);
+
                 var database = client.GetDatabase(settings.DatabaseName);
 
                 _tweet = database.GetCollection<Tweet>("TweetCollection");
                 _users = database.GetCollection<UserRegistration>("UserRegistration");
                 _reply = database.GetCollection<Reply>("ReplyCollection");
+
+
                 _log4net.Info("MongoDb connected with database:" + database);
             }
             catch (Exception ex)
@@ -116,23 +136,94 @@ namespace TweetAPP.Repository
             }
         }
 
-        public string likes(string id)
+
+        public string replyToPost(string id, Tweet reply, string Username)
         {
             try
             {
-                var tweet = _tweet.Find(x => x.Id == id).FirstOrDefault();
-                if (tweet != null){
-                    tweet.Likes += 1;
-                    _tweet.ReplaceOne(x => x.Id == id, tweet);
-                    _log4net.Info("Repository called from Service to count on likes of tweet");
-                    return "liked Successfully";
-                }
-                else
+                if (id.Length != 24)
                 {
-                    _log4net.Error("Tweet not exists");
-                    return "Invalid Tweet!";
+                    _log4net.Error("Not a valid tweet Id");
+                    return "Post not found";
                 }
-               
+
+                var filter = Builders<Tweet>.Filter.Eq(x => x.Id, id);
+                Tweet oldtweet = _tweet.Find(filter).FirstOrDefault();
+
+                if (oldtweet != null && reply.TweetText != null)
+                {
+                    Tweet tweet = new Tweet();
+
+                    tweet.Username = Username;
+                    var x = getUsertbyUserName(Username);
+                    if (x != null && reply.TweetText != null)
+                    {
+                       
+                        tweet.TweetText = reply.TweetText;
+                        tweet.TweetTime = DateTime.UtcNow;
+                        tweet.Tags = reply.Tags;
+                        tweet.Fullname = x.FirstName + " " + x.LastName;
+                        tweet.LikedBy = new List<string>();
+                        tweet.ReplyID = new List<string>();
+                        tweet.Likes = tweet.LikedBy.Count();
+                        _tweet.InsertOneAsync(tweet);
+                        _log4net.Info("reply added as new tweet ");
+
+
+                        oldtweet.ReplyID.Add(tweet.Id);
+                        _tweet.FindOneAndReplace(x => x.Id == oldtweet.Id, oldtweet);
+                        _log4net.Info("Repository called from Service to post tweet ");
+                        return "Replied";
+
+                    }
+                      return "Cannot reply";
+                }
+
+                _log4net.Error("Invalid tweet/ tweet not found");
+                return "inValid tweet";
+            }
+            catch (Exception ex)
+            {
+                _log4net.Error("Exception occured while posting reply to tweet :" + ex.Message);
+                throw ex.InnerException;
+            }
+        }
+
+        public string likes(string id,string username)
+        {
+            List<string> likedBy = new List<string>();
+            try
+            {
+                var tweet = _tweet.Find(x => x.Id == id).FirstOrDefault();
+                if (tweet != null)
+                {
+                    if (tweet.LikedBy == null)
+                    {
+                        tweet.LikedBy.Add(username);
+                        tweet.Likes = tweet.LikedBy.Count();
+                        _tweet.ReplaceOne(x => x.Id == id, tweet);
+                        _log4net.Info("Repository called from Service to decrease likes of tweet");
+                        return "liked Successfully for" + username;
+                    }
+                    else if(tweet.LikedBy.Contains(username) == true)
+                    {
+                        tweet.LikedBy.Remove(username);
+                        tweet.Likes = tweet.LikedBy.Count();
+                        _tweet.ReplaceOne(x => x.Id == id, tweet);
+                        _log4net.Info("Repository called from Service to decrease likes of tweet");
+                        return "removed liked for" + username;
+                    }
+                    else
+                    {
+                        tweet.LikedBy.Add(username);
+                        tweet.Likes = tweet.LikedBy.Count();
+                        _tweet.ReplaceOne(x => x.Id == id, tweet);
+                        _log4net.Info("Repository called from Service to decrease likes of tweet");
+                        return "liked Successfully for" + username;
+                    }
+                }
+
+                return "tweet not found";
             }
             catch (Exception ex)
             {
@@ -158,10 +249,14 @@ namespace TweetAPP.Repository
                 var x = getUsertbyUserName(username);
                 if (x!=null && twt.TweetText!=null)
                 {
-                    tweet.Likes = 0;
+                   
                     tweet.TweetText = twt.TweetText;
                     tweet.TweetTime = DateTime.UtcNow;
                     tweet.Tags = twt.Tags;
+                    tweet.Fullname = x.FirstName +" "+ x.LastName;
+                    tweet.LikedBy = new List<string>() ;
+                    tweet.ReplyID = new List<string>();
+                    tweet.Likes = tweet.LikedBy.Count();
                     _tweet.InsertOne(tweet);
                     _log4net.Info("Repository called from Service to post tweet ");
                     return true;
@@ -200,11 +295,14 @@ namespace TweetAPP.Repository
             {
                 Tweet twt = getPostbyID(tweetId);
                 twt.Id = tweetId;
-                twt.Likes = tweet.Likes;
+               
                 twt.Username = twt.Username;
                 twt.TweetTime =  DateTime.UtcNow;
                 twt.TweetText = tweet.TweetText;
                 twt.Tags = tweet.Tags;
+                twt.LikedBy = twt.LikedBy;
+                twt.ReplyID = twt.ReplyID;
+                twt.Likes = tweet.LikedBy.Count();
                 if (twt.TweetText != null)
                 {
                     _tweet.ReplaceOne(x => x.Id == tweetId, twt);
@@ -238,7 +336,7 @@ namespace TweetAPP.Repository
                 }
                 else
                 {
-                    _log4net.Error("tweet delete not possible ");
+                    _log4net.Error("tweet can't be deleted ");
                     return false;
                 }
             }

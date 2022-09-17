@@ -95,23 +95,23 @@ namespace TweetAPP.Controllers
 
         [HttpPut]
         [Route("/api/v1.0/login/forgotPassword")]
-        public ActionResult UpdatePassword(string username,string password)
+        public ActionResult UpdatePassword([FromBody]ForgotPassword forgot)
         {
 
             var responseModelobj = new ResponseModel<string>();
             try
             {
-                var result = _userService.forgotPassword(username, password);
+                var result = _userService.forgotPassword(forgot);
                 if (result.Equals("updated"))
                 {
                     responseModelobj.Result = result;
-                    responseModelobj.Message = "Updated password successfully for " + username;
+                    responseModelobj.Message = "Updated password successfully for " + forgot.Username;
                     responseModelobj.StatusCode = 200;
                 }
                 else
                 {
                     responseModelobj.Result = "user not found";
-                    responseModelobj.Message = "user not found with " + username;
+                    responseModelobj.Message = "user not found with " + forgot.Username;
                     responseModelobj.StatusCode = 404;
                 }
                
@@ -119,16 +119,9 @@ namespace TweetAPP.Controllers
             catch (Exception e)
             {
                 responseModelobj.Result = null;
-                responseModelobj.Message = "Password updation failed for" + username + "Error: "+e.Message;
+                responseModelobj.Message = "Password updation failed for" + forgot.Username + "Error: "+e.Message;
                 responseModelobj.StatusCode = 404;
             }
-
-            //if (result.Equals("updated"))
-            //{
-            //    return Ok("New password saved");
-            //}
-            //else
-            //    return BadRequest("User not found");
             return Ok(responseModelobj);
         }
 

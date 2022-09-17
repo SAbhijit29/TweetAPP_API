@@ -66,35 +66,56 @@ namespace TweetAPP.Controllers
             return responseModelobj;
         }
 
-        [HttpGet]
-        [Route("/api/v1.0/tweets/tweetreplies/{tweetId}")]
-        public async Task<ResponseModel<List<Reply>>> GetRepliesforTweet([FromRoute]string tweetId)
-        {
-            var responseModelobj = new ResponseModel<List<Reply>>();
-            try
-            {
-                var getReply = await _userService.GetReplyonTweet(tweetId);
-                responseModelobj.Result = getReply;
-                responseModelobj.Message = "get all replied to tweetId: "+ tweetId;
-                responseModelobj.StatusCode = 200;
-            }
-            catch (Exception e)
-            {
-                responseModelobj.Result = null;
-                responseModelobj.Message = e.Message;
-                responseModelobj.StatusCode = 404;
-            }
-            return responseModelobj;
-        }
+        //[HttpGet]
+        //[Route("/api/v1.0/tweets/tweetreplies/{tweetId}")]
+        //public async Task<ResponseModel<List<Reply>>> GetRepliesforTweet([FromRoute]string tweetId)
+        //{
+        //    var responseModelobj = new ResponseModel<List<Reply>>();
+        //    try
+        //    {
+        //        var getReply = await _userService.GetReplyonTweet(tweetId);
+        //        responseModelobj.Result = getReply;
+        //        responseModelobj.Message = "get all replied to tweetId: "+ tweetId;
+        //        responseModelobj.StatusCode = 200;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        responseModelobj.Result = null;
+        //        responseModelobj.Message = e.Message;
+        //        responseModelobj.StatusCode = 404;
+        //    }
+        //    return responseModelobj;
+        //}
+
+        //[HttpPost]
+        //[Route("/api/v1.0/tweets/{username}/reply/{tweetId}")]
+        //public IActionResult PostReply([FromRoute]string tweetId, [FromBody]Reply reply, [FromRoute]string username)
+        //{
+        //    var responseModelobj = new ResponseModel<string>();
+        //    try
+        //    {
+        //        var postRply = _userService.replyPost(tweetId, reply, username);
+        //        responseModelobj.Result = postRply;
+        //        responseModelobj.Message = "Replied successfully to tweetId: " + tweetId;
+        //        responseModelobj.StatusCode = 200;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        responseModelobj.Result = null;
+        //        responseModelobj.Message = e.Message;
+        //        responseModelobj.StatusCode = 404;
+        //    }
+        //    return Ok(responseModelobj);
+        //}
 
         [HttpPost]
-        [Route("/api/v1.0/tweets/{username}/reply/{tweetId}")]
-        public IActionResult PostReply([FromRoute]string tweetId, [FromBody]Reply reply, [FromRoute]string username)
+        [Route("/api/v1.0/tweets/{username}/replyToPost/{tweetId}")]
+        public IActionResult ReplytoPost([FromRoute]string tweetId, [FromBody]Tweet reply, [FromRoute]string username)
         {
             var responseModelobj = new ResponseModel<string>();
             try
             {
-                var postRply = _userService.replyPost(tweetId, reply, username);
+                var postRply = _userService.replyToPost(tweetId, reply, username);
                 responseModelobj.Result = postRply;
                 responseModelobj.Message = "Replied successfully to tweetId: " + tweetId;
                 responseModelobj.StatusCode = 200;
@@ -108,14 +129,35 @@ namespace TweetAPP.Controllers
             return Ok(responseModelobj);
         }
 
+        [HttpGet]
+        [Route("/api/v1.0/tweets/GetReplyById/{tweetId}")]
+        public ResponseModel<Tweet> getPostbyID([FromRoute]string tweetId)
+        {
+            var responseModelobj = new ResponseModel<Tweet>();
+            try
+            {
+                var tweet = _userService.getPostbyID(tweetId);
+                responseModelobj.Result = tweet;
+                responseModelobj.Message = "fetch reply to post "+ tweetId;
+                responseModelobj.StatusCode = 200;
+            }
+            catch (Exception e)
+            {
+                responseModelobj.Result = null;
+                responseModelobj.Message = e.Message;
+                responseModelobj.StatusCode = 400;
+            }
+            return responseModelobj;
+        }
+
         [HttpPatch]
-        [Route("/api/v1.0/tweets/update/{tweetId}")]
-        public ResponseModel<string> like(string tweetId)
+        [Route("/api/v1.0/tweets/{tweetId}/update/{username}")]
+        public ResponseModel<string> like([FromRoute]string tweetId,[FromRoute]string username)
         {
             var responseModelobj = new ResponseModel<string>();
             try
             {
-                var like = _userService.likes(tweetId);
+                var like = _userService.likes(tweetId,username);
                 responseModelobj.Result = like;
                 responseModelobj.Message ="tweet "+tweetId+" liked successfully";
                 responseModelobj.StatusCode = 200;
@@ -203,7 +245,7 @@ namespace TweetAPP.Controllers
             {
                 var dltTwet = _userService.DeleteTweet(tweetId, username); 
                 responseModelobj.Result = false;
-                responseModelobj.Message = "Tweet with "+tweetId+"deleted successfully for "+ username;
+                responseModelobj.Message = "Tweet with "+tweetId+" deleted successfully for "+ username;
                 responseModelobj.StatusCode = 200;
             }
             catch (Exception ex)

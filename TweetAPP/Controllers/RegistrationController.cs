@@ -8,6 +8,7 @@ using TweetAPP.MongoDbContext;
 using TweetAPP.Models;
 using TweetAPP.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace TweetAPP.Controllers
 {
@@ -59,7 +60,6 @@ namespace TweetAPP.Controllers
                 responseModelobj.StatusCode = 400;
                 responseModelobj.Message = "Validation error";
                 responseModelobj.Result = null;
-              //  return responseModelobj;
             }
             var usr = await _userService.CreateUserAsync(user);
             if (usr!=null)
@@ -67,21 +67,49 @@ namespace TweetAPP.Controllers
                 responseModelobj.StatusCode = 200;
                 responseModelobj.Message = "user registered successfully";
                 responseModelobj.Result = user.Id;
-              //  return responseModelobj;
-                // return Ok(user.Id);
             }
             else
             {
                 responseModelobj.StatusCode = 400;
                 responseModelobj.Message = "Username/Email already exists!";
                 responseModelobj.Result = null;
-               // return responseModelobj;
-               // return BadRequest("Username/Email already exists!");
             }
 
             return Ok(responseModelobj);
         }
 
+        //[HttpPut]
+        //[Route("/api/v1.0/user/upload")]
+        //public ActionResult UpdateImage(IFormFile file, string username)
+        //{
+
+        //    var responseModelobj = new ResponseModel<string>();
+        //    try
+        //    {
+        //        var result = _userService.UploadImage(file,username);
+        //        if (result.Equals("Image uploaded successfully"))
+        //        {
+        //            responseModelobj.Result = result;
+        //            responseModelobj.Message = "Updated Image successfully for " + username;
+        //            responseModelobj.StatusCode = 200;
+        //        }
+        //        else
+        //        {
+        //            responseModelobj.Result = result.ToString();
+        //            responseModelobj.Message = "user not found with " + username;
+        //            responseModelobj.StatusCode = 404;
+        //        }
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        responseModelobj.Result = null;
+        //        responseModelobj.Message = "Password updation failed for" + username + "Error: " + e.Message;
+        //        responseModelobj.StatusCode = 404;
+        //    }
+
+        //    return Ok(responseModelobj);
+        //}
 
     }
 }

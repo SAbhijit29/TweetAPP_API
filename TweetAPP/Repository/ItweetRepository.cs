@@ -12,7 +12,7 @@ namespace TweetAPP.Repository
 
         Task<List<Tweet>>GetTweetsByUsername(string username);
 
-        string likes(string Id);
+        string likes(string Id,string username);
 
         bool PostTweet(string username, Tweet tweet);
 
@@ -24,5 +24,8 @@ namespace TweetAPP.Repository
 
         string replyPost(string Id, Reply reply, string username);
         //string replyPost(string username, Reply reply, string id);
+
+        string replyToPost(string Id, Tweet reply, string username);
+        Tweet getPostbyID(string Id);
     }
 }

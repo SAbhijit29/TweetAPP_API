@@ -12,7 +12,9 @@ namespace TweetAPP.Models
         public string Email { get; set; }
         public string Username { get; set; }
         public double Phone { get; set; }
+        public DateTime JoinedDate { get; set; }
 
+        public string Image { get; set; }
         #endregion
     }
 }
